@@ -1,0 +1,25 @@
+syntax = "proto2";
+
+message Coordinates {
+  required string coordinates = 1;
+}
+
+message Officer {
+  required string first_name = 1;
+  required string last_name = 2;
+  required string rank = 3;
+}
+
+message Spaceship {
+  required string alignment = 1;
+  required string name = 2;
+  required string class_type = 3;
+  required float length = 4;
+  required int32 crew_size = 5;
+  required bool armed = 6;
+  repeated Officer officers = 7;
+}
+
+service ReportingServer {
+  rpc GetSpaceships (Coordinates) returns (stream Spaceship);
+}
