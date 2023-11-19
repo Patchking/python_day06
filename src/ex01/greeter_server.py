@@ -62,12 +62,10 @@ def serve():
     pb2_grpc.add_ReportingServerServicer_to_server(ReportingServer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
-    server.wait_for_termination()
-    # try:
-    #     while True:
-    #         time.sleep(86400)  # One day in seconds
-    # except KeyboardInterrupt:
-    #     server.stop(0)
+    try:
+        server.wait_for_termination()
+    except KeyboardInterrupt:
+        server.stop(0)
 
 if __name__ == "__main__":
     serve()
