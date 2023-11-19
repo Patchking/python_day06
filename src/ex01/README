@@ -1,0 +1,9 @@
+1) Запустить сервер 
+
+python3 greeter_client.py
+
+2) Запуситить клиент
+
+python3 reporting_client.py sdfdsdfasdf -p
+
+p.s - флаг отвечает за красивый вывод. По заданию требуется вывести сериализованный json
