@@ -7,12 +7,10 @@ import generated_pb2_grpc as pb2_grpc
 
 class ReportingServer(pb2_grpc.ReportingServerServicer):
     def GetSpaceships(self, request, context):
-        # Extract coordinates from the client request (request.coordinates)
-        coordinates = request.coordinates
         # Generate a random number of spaceships (1-10)
-        random.seed(coordinates)
-        num_spaceships = random.randint(1, 10)
+        random.seed(request.coordinates)
 
+        num_spaceships = random.randint(1, 10)
         for _ in range(num_spaceships):
             yield self.generate_random_spaceship()
 
@@ -20,7 +18,9 @@ class ReportingServer(pb2_grpc.ReportingServerServicer):
         # Generate a random spaceship using predefined values
         alignment = random.choice(["Ally", "Enemy"])
         name = "Spaceship" + str(random.randint(1, 1000))
-        spaceship_class = random.choice(["Corvette", "Dreadnought"])
+        if alignment == "Enemy":
+            name = random.choice([name, "Unknown"])
+        spaceship_class = random.choice(["Corvette", "Frigate", "Cruiser", "Destroyer", "Carrier", "Dreadnought"])
         length = round(random.uniform(100.0, 20000.0), 2)
         crew_size = random.randint(1, 500)
         armed = random.choice([True, False])
@@ -62,11 +62,12 @@ def serve():
     pb2_grpc.add_ReportingServerServicer_to_server(ReportingServer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
-    try:
-        while True:
-            time.sleep(86400)  # One day in seconds
-    except KeyboardInterrupt:
-        server.stop(0)
+    server.wait_for_termination()
+    # try:
+    #     while True:
+    #         time.sleep(86400)  # One day in seconds
+    # except KeyboardInterrupt:
+    #     server.stop(0)
 
 if __name__ == "__main__":
     serve()
