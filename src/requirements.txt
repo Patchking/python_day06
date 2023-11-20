@@ -1,0 +1,6 @@
+grpcio
+protobuf
+pydantic
+sqlalchemy
+psycopg2-binary
+alembic
