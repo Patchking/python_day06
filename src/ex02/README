@@ -1,0 +1,16 @@
+1) Запустить сервер 
+
+python3 greeter_client.py
+
+3) запуситить postgressql сервер. Авторизационные данные задаются в database.py
+
+2) Запуситить клиент
+
+python3 reporting_client.py -p scan sdfdsdfasdf 
+python3 reporting_client.py -p list_traitors
+
+p.s - флаг отвечает за красивый вывод. По заданию требуется вывести сериализованный json
+
+3) Для полной очистки бд выполните следующую команду
+
+python3 database.py
